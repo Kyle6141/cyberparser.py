@@ -1,0 +1,31 @@
+import feedparser
+import requests 
+from datetime import timedelta, datetime
+
+#Urls
+feed_urls = ["https://feeds.feedburner.com/TheHackersNews", "https://www.bleepingcomputer.com/feed/", "https://www.darkreading.com/rss.xml", "https://threatpost.com/feed/", "https://threatpost.com/feed/", "https://www.rapid7.com/rss.xml"]
+
+
+keywords = []
+while True:
+	x = input("What keywords are you interested in? (Type 'done' when finished): ")
+	if x.lower() == 'done':
+		break
+	keywords.append(x)
+	
+#Parse the feed
+for feed_url in feed_urls:
+	x = feedparser.parse(feed_url)
+	print(f"Feed Title: {x.feed.title}")
+	print(f"Number of entries: {len(x.entries)}")
+
+
+#Loop through entries
+	for entry in x.entries:
+		for i in keywords:
+			if i in entry.description.lower():
+				print(f"\nTitle: {entry.title}")
+				print(f"Link: {entry.link}")
+				print(f"Published {entry.published}")
+				print(f"Description {entry.description}")
+	 
