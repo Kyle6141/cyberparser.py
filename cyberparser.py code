@@ -11,7 +11,7 @@ while True:
 	x = input("What keywords are you interested in? (Type 'done' when finished): ")
 	if x.lower() == 'done':
 		break
-	keywords.append(x)
+	keywords.append(x.lower())
 	
 #Parse the feed
 for feed_url in feed_urls:
@@ -22,8 +22,8 @@ for feed_url in feed_urls:
 
 #Loop through entries
 	for entry in x.entries:
-		for i in keywords:
-			if i in entry.description.lower():
+		description_lower = entry.description.lower() if hasattr(entry, 'description') else ''
+		if any(keyword in description_lower for keyword in keywords):
 				print(f"\nTitle: {entry.title}")
 				print(f"Link: {entry.link}")
 				print(f"Published {entry.published}")
